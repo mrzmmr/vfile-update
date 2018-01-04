@@ -1,0 +1,40 @@
+{
+  "name": "vfile-update",
+  "version": "1.0.0",
+  "description": "Update paths in nested vfile contents.",
+  "main": "index.js",
+  "scripts": {
+    "xo": "xo --fix --space --no-esnext",
+    "tape": "tape test.js",
+    "report": "nyc report --reporter=text-lcov | coveralls",
+    "pretest": "npm run xo",
+    "test": "nyc npm run tape"
+  },
+  "keywords": [
+    "update",
+    "vfile",
+    "undo",
+    "paths",
+    "file-paths"
+  ],
+  "author": "Paul Zimmer",
+  "license": "MIT",
+  "devDependencies": {
+    "coveralls": "^3.0.0",
+    "nyc": "^11.4.1",
+    "tape": "^4.8.0",
+    "xo": "^0.18.2"
+  },
+  "dependencies": {
+    "clone": "^2.1.1",
+    "vfile": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrzmmr/vfile-update.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrzmmr/vfile-update/issues"
+  },
+  "homepage": "https://github.com/mrzmmr/vfile-update#readme"
+}
