@@ -1,6 +1,7 @@
 'use strict';
 
 /* Dependencies */
+var assert = require('assert');
 var clone = require('clone');
 var vfile = require('vfile');
 
@@ -28,7 +29,10 @@ function update(file, options, callback) {
       continue;
     }
 
-    if (n !== file) {
+    /* If n !deepStrictEqual file then update dirname. */
+    try {
+      assert.deepStrictEqual(n, file);
+    } catch (err) {
       n.dirname = p.path;
     }
 
@@ -59,7 +63,7 @@ function undo(file) {
     var n = queue.shift();
     var p = queue.shift();
 
-    if (n.history.length > 0) {
+    if (n.history.length > 1) {
       n.history.pop();
     }
 
