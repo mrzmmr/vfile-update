@@ -2,7 +2,7 @@
 
 /* Dependencies */
 var tape = require('tape');
-var clone = require('vfile');
+var clone = require('clone');
 var vfile = require('vfile');
 var update = require('./');
 
@@ -25,59 +25,63 @@ var file = vfile({
   ]
 });
 
-tape('vfile-undo', function (t) {
-  var test = update(file);
-  var test2 = update(file);
-  test.path = 'baz';
-  test = update(test);
-  t.notDeepEqual(test, test2);
-
-  test = update.undo(test);
-  t.deepEqual(test, test2);
-
-  test.path = 'baz';
-  test = update(test);
-  delete test.contents[0].contents;
-
-  t.ok(update.undo(test));
-
+tape('cloned copy !== file', function (t) {
+  var copy = clone(file);
+  t.ok(copy !== file);
   t.end();
 });
 
-tape('vfile-update', function (t) {
-  t.doesNotThrow(function () {
-    t.test('callback with node and parent', function (t) {
-      var test = update(file, function (node, parent) {
-        t.ok(parent);
-        t.ok(node);
-        t.ok(parent.contents.indexOf(node) > -1);
-      });
-      t.ok(test);
-      t.end();
-    });
+tape('undo - file', function (t) {
+  var copy = clone(file);
+  var updated = update(copy);
+  t.deepEqual(file, update.undo(updated));
+  t.end();
+});
 
-    t.test('returns an updated copy of file', function (t) {
-      var test = update(file);
-      t.ok(test);
-      t.notDeepEqual(test, file);
-      t.end();
-    });
+tape('update - file', function (t) {
+  var copy = clone(file);
+  copy.contents[0].path = 'foo/bar';
+  copy.contents[1].path = 'foo/foo.txt';
+  copy.contents[0].contents[0].path = 'foo/bar/bar.txt';
+  t.deepEqual(copy, update(file));
+  t.end();
+});
 
-    t.test('skips nodes with no path', function (t) {
-      var test = clone(file);
-      delete test.contents[0].contents[0].contents;
-      t.ok(update(test));
-      t.end();
-    });
+tape('undo - if theres no contents then skip', function (t) {
+  var copy = clone(file);
+  delete copy.contents[0].contents;
+  t.ok(update.undo(copy));
+  t.end();
+});
 
-    t.test('changing path after update', function (t) {
-      var test = update(file);
-      test.path = 'baz/foo';
-      test = update(test);
-      t.deepEqual(test, update(test));
-      t.end();
-    });
+tape('update - if theres no contents then skip', function (t) {
+  var copy = clone(file);
+  delete copy.contents[0].contents;
+  t.ok(update(copy));
+  t.end();
+});
+
+tape('update - if history.length === 0, then skip', function (t) {
+  var copy = clone(file);
+  copy.contents[0].history = [];
+  t.ok(update(copy));
+  t.end();
+});
+
+tape('undo - if history.length === 0, then skip', function (t) {
+  var copy = clone(file);
+  copy.contents[0].history = [];
+  t.ok(update.undo(copy));
+  t.end();
+});
+
+tape('update - callback', function (t) {
+  var copy = clone(file);
+  update(copy, function (node, parent) {
+    t.ok(node !== copy);
+    if (parent && parent.contents) {
+      t.ok(parent.contents.indexOf(node) > -1);
+    }
   });
   t.end();
 });
-
