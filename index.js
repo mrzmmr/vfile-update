@@ -25,7 +25,7 @@ function update(file, options, callback) {
     var n = queue.shift();
     var p = queue.shift();
 
-    if (!n.contents) {
+    if (!n || !n.contents || !n.path) {
       continue;
     }
 
@@ -43,10 +43,9 @@ function update(file, options, callback) {
     callback(n, p);
 
     if (Array.isArray(n.contents)) {
-      for (i in n.contents) {
-        if (n.contents[i].history.length > 0) {
-          queue.push(n.contents[i], n);
-        }
+      i = -1;
+      while (i++ < n.contents.length - 1) {
+        queue.push(n.contents[i], n);
       }
     }
   }
@@ -63,12 +62,12 @@ function undo(file) {
     var n = queue.shift();
     var p = queue.shift();
 
-    if (n.history.length > 1) {
-      n.history.pop();
+    if (!n || !n.contents || !n.history) {
+      continue;
     }
 
-    if (!n.contents) {
-      continue;
+    if (n.history.length > 1) {
+      n.history.pop();
     }
 
     if (p.contents.indexOf(n) < 0) {
@@ -76,10 +75,9 @@ function undo(file) {
     }
 
     if (Array.isArray(n.contents)) {
-      for (i in n.contents) {
-        if (n.contents[i].history.length > 0) {
-          queue.push(n.contents[i], n);
-        }
+      i = -1;
+      while (i++ < n.contents.length - 1) {
+        queue.push(n.contents[i], n);
       }
     }
   }
