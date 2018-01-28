@@ -76,12 +76,21 @@ tape('undo - if history.length === 0, then skip', function (t) {
 });
 
 tape('update - callback', function (t) {
-  var copy = clone(file);
-  update(copy, function (node, parent) {
-    t.ok(node !== copy);
-    if (parent && parent.contents) {
-      t.ok(parent.contents.indexOf(node) > -1);
-    }
-  });
-  t.end();
-});
+  var foo = vfile({path: 'foo'})
+  var bar = update(foo, function (current) {
+    current.path = 'bar'
+    t.notSame(current, foo)
+  })
+  t.end()
+})
+
+// tape('update - callback', function (t) {
+//   var copy = clone(file);
+//   update(copy, function (node, parent) {
+//     t.ok(node !== copy);
+//     if (parent && parent.contents) {
+//       t.ok(parent.contents.indexOf(node) > -1);
+//     }
+//   });
+//   t.end();
+// });

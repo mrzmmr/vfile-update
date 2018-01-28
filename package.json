@@ -26,8 +26,7 @@
     "xo": "^0.18.2"
   },
   "dependencies": {
-    "clone": "^2.1.1",
-    "vfile": "^2.3.0"
+    "vfile-visit": "^1.1.0"
   },
   "repository": {
     "type": "git",
