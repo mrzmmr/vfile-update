@@ -1,6 +1,6 @@
 {
   "name": "vfile-update",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Update paths in nested vfile contents.",
   "main": "index.js",
   "scripts": {
@@ -20,9 +20,11 @@
   "author": "Paul Zimmer",
   "license": "MIT",
   "devDependencies": {
+    "clone": "^2.1.1",
     "coveralls": "^3.0.0",
     "nyc": "^11.4.1",
     "tape": "^4.8.0",
+    "vfile": "^2.3.0",
     "xo": "^0.18.2"
   },
   "dependencies": {

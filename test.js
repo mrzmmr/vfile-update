@@ -1,6 +1,5 @@
 'use strict';
 
-/* Dependencies */
 var tape = require('tape');
 var clone = require('clone');
 var vfile = require('vfile');
