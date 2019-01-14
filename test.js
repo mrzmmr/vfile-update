@@ -1,6 +1,6 @@
 'use strict';
 
-var tape = require('tape');
+var {test} = require('tap');
 var clone = require('clone');
 var vfile = require('vfile');
 var update = require('./');
@@ -24,20 +24,20 @@ var file = vfile({
   ]
 });
 
-tape('cloned copy !== file', function (t) {
+test('cloned copy !== file', function (t) {
   var copy = clone(file);
   t.ok(copy !== file);
   t.end();
 });
 
-tape('undo - file', function (t) {
+test('undo - file', function (t) {
   var copy = clone(file);
   var updated = update(copy);
   t.deepEqual(file, update.undo(updated));
   t.end();
 });
 
-tape('update - file', function (t) {
+test('update - file', function (t) {
   var copy = clone(file);
   copy.contents[0].path = 'foo/bar';
   copy.contents[1].path = 'foo/foo.txt';
@@ -46,35 +46,35 @@ tape('update - file', function (t) {
   t.end();
 });
 
-tape('undo - if theres no contents then skip', function (t) {
+test('undo - if theres no contents then skip', function (t) {
   var copy = clone(file);
   delete copy.contents[0].contents;
   t.ok(update.undo(copy));
   t.end();
 });
 
-tape('update - if theres no contents then skip', function (t) {
+test('update - if theres no contents then skip', function (t) {
   var copy = clone(file);
   delete copy.contents[0].contents;
   t.ok(update(copy));
   t.end();
 });
 
-tape('update - if history.length === 0, then skip', function (t) {
+test('update - if history.length === 0, then skip', function (t) {
   var copy = clone(file);
   copy.contents[0].history = [];
   t.ok(update(copy));
   t.end();
 });
 
-tape('undo - if history.length === 0, then skip', function (t) {
+test('undo - if history.length === 0, then skip', function (t) {
   var copy = clone(file);
   copy.contents[0].history = [];
   t.ok(update.undo(copy));
   t.end();
 });
 
-tape('update - callback', function (t) {
+test('update - callback', function (t) {
   var foo = vfile({path: 'foo'})
   var bar = update(foo, function (current) {
     current.path = 'bar'
@@ -83,7 +83,7 @@ tape('update - callback', function (t) {
   t.end()
 })
 
-// tape('update - callback', function (t) {
+// test('update - callback', function (t) {
 //   var copy = clone(file);
 //   update(copy, function (node, parent) {
 //     t.ok(node !== copy);
