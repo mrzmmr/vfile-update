@@ -2,27 +2,19 @@
 
 const visit = require('vfile-visit');
 
-module.exports = update;
-module.exports.undo = undo;
-
-function update(file, callback) {
-	if (typeof callback !== 'function') {
-		callback = function () {};
-	}
-
+module.exports = (file, fn = () => {}) => {
 	return visit(file, (current, parent, index) => {
 		if (current.path && parent.path) {
 			current.dirname = parent.path;
 		}
 
-		callback(current, parent, index);
+		fn(current, parent, index);
 	});
-}
+};
 
-function undo(file) {
-	return visit(file, current => {
+module.exports.undo = file =>
+	visit(file, current => {
 		if (current.history.length > 1) {
 			current.history.pop();
 		}
 	});
-}

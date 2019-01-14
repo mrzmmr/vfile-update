@@ -1,42 +1,42 @@
 {
-  "name": "vfile-update",
-  "version": "1.2.1",
-  "description": "Update paths in nested vfile contents.",
-  "main": "index.js",
-  "engines": {
-    "node": ">=6.0.0"
-  },
-  "scripts": {
-	  "xo": "xo --fix",
-    "tap": "tap test.js -cRspec --100",
-    "test": "npm run xo && npm run tap",
-    "report": "nyc report --reporter=text-lcov | coveralls"
-  },
-  "keywords": [
-    "update",
-    "vfile",
-    "undo",
-    "paths",
-    "file-paths"
-  ],
-  "author": "Paul Zimmer",
-  "license": "MIT",
-  "devDependencies": {
-    "clone": "^2.1.1",
-    "coveralls": "^3.0.2",
-    "tap": "^12.1.1",
-    "vfile": "^2.3.0",
-    "xo": "^0.24.0"
-  },
-  "dependencies": {
-    "vfile-visit": "^1.1.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mrzmmr/vfile-update.git"
-  },
-  "bugs": {
-    "url": "https://github.com/mrzmmr/vfile-update/issues"
-  },
-  "homepage": "https://github.com/mrzmmr/vfile-update#readme"
+	"name": "vfile-update",
+	"version": "1.2.1",
+	"description": "Update paths in nested vfile contents.",
+	"main": "index.js",
+	"engines": {
+		"node": ">=6.0.0"
+	},
+	"scripts": {
+		"xo": "xo --fix",
+		"tap": "tap test.js -cRspec --100",
+		"test": "npm run xo && npm run tap",
+		"report": "nyc report --reporter=text-lcov | coveralls"
+	},
+	"keywords": [
+		"update",
+		"vfile",
+		"undo",
+		"paths",
+		"file-paths"
+	],
+	"author": "Paul Zimmer",
+	"license": "MIT",
+	"devDependencies": {
+		"clone": "^2.1.1",
+		"coveralls": "^3.0.2",
+		"tap": "^12.1.1",
+		"vfile": "^2.3.0",
+		"xo": "^0.24.0"
+	},
+	"dependencies": {
+		"vfile-visit": "^1.1.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mrzmmr/vfile-update.git"
+	},
+	"bugs": {
+		"url": "https://github.com/mrzmmr/vfile-update/issues"
+	},
+	"homepage": "https://github.com/mrzmmr/vfile-update#readme"
 }
