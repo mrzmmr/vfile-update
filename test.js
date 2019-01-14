@@ -24,61 +24,79 @@ const file = vfile({
 	]
 });
 
-test('cloned copy !== file', t => {
-	const copy = clone(file);
-	t.ok(copy !== file);
-	t.end();
-});
+test('vfile-update', t => {
+	t.deepEqual(
+		update.undo(update(file)),
+		file,
+		'should undo updating files history.'
+	);
 
-test('undo - file', t => {
-	const copy = clone(file);
-	const updated = update(copy);
-	t.deepEqual(file, update.undo(updated));
-	t.end();
-});
-
-test('update - file', t => {
-	const copy = clone(file);
-	copy.contents[0].path = 'foo/bar';
-	copy.contents[1].path = 'foo/foo.txt';
-	copy.contents[0].contents[0].path = 'foo/bar/bar.txt';
-	t.deepEqual(copy, update(file));
-	t.end();
-});
-
-test('undo - if theres no contents then skip', t => {
-	const copy = clone(file);
-	delete copy.contents[0].contents;
-	t.ok(update.undo(copy));
-	t.end();
-});
-
-test('update - if theres no contents then skip', t => {
-	const copy = clone(file);
-	delete copy.contents[0].contents;
-	t.ok(update(copy));
-	t.end();
-});
-
-test('update - if history.length === 0, then skip', t => {
-	const copy = clone(file);
-	copy.contents[0].history = [];
-	t.ok(update(copy));
-	t.end();
-});
-
-test('undo - if history.length === 0, then skip', t => {
-	const copy = clone(file);
-	copy.contents[0].history = [];
-	t.ok(update.undo(copy));
-	t.end();
-});
-
-test('update - callback', t => {
-	const foo = vfile({path: 'foo'});
-	update(foo, current => {
-		current.path = 'bar';
-		t.notSame(current, foo);
+	t.doesNotThrow(() => {
+		const copy = clone(file);
+		delete copy.contents[0].contents;
+		t.ok(
+			update.undo(copy),
+			'should skip file if there is no contents.'
+		);
 	});
+
+	t.doesNotThrow(() => {
+		const copy = clone(file);
+		delete copy.contents[0].contents;
+		t.ok(
+			update.undo(copy),
+			'should skip undo if there is no contents.'
+		);
+	});
+
+	t.equal(
+		update(file).contents[0].path,
+		'foo/bar',
+		'should update correctly (contents[0]).'
+	);
+	t.equal(
+		update(file).contents[1].path,
+		'foo/foo.txt',
+		'should update correctly (contents[1]).'
+	);
+
+	t.equal(
+		update(file).contents[0].contents[0].path,
+		'foo/bar/bar.txt',
+		'should update correctly (nested).'
+	);
+
+	t.doesNotThrow(() => {
+		const copy = clone(file);
+		copy.contents[0].history = [];
+		t.ok(
+			update.undo(copy),
+			'should skip if history length is 0.'
+		);
+	});
+
+	t.doesNotThrow(() => {
+		const copy = clone(file);
+		copy.contents[0].history = [];
+		t.ok(
+			update.undo(copy),
+			'skip undo if history length is 0.'
+		);
+	});
+
+	t.doesNotThrow(() => {
+		const foo = vfile({path: 'foo'});
+		update(foo, current => {
+			current.path = 'bar';
+
+			t.notSame(
+				current,
+				foo,
+				'should call callback..'
+			);
+		});
+	});
+
 	t.end();
 });
+
