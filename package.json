@@ -7,7 +7,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "xo": "xo --fix --space --no-esnext index.js",
+	  "xo": "xo --fix",
     "tap": "tap test.js -cRspec --100",
     "test": "npm run xo && npm run tap",
     "report": "nyc report --reporter=text-lcov | coveralls"
@@ -24,9 +24,7 @@
   "devDependencies": {
     "clone": "^2.1.1",
     "coveralls": "^3.0.2",
-    "nyc": "^13.1.0",
     "tap": "^12.1.1",
-    "tape": "^4.8.0",
     "vfile": "^2.3.0",
     "xo": "^0.24.0"
   },
