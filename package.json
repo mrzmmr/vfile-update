@@ -3,6 +3,9 @@
   "version": "1.2.1",
   "description": "Update paths in nested vfile contents.",
   "main": "index.js",
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "scripts": {
     "xo": "xo --fix --space --no-esnext index.js",
     "tape": "tape test.js",
