@@ -47,7 +47,7 @@ console.log(undone.contents[0].contents[0].history
 
 ## api
 
-### `update (file[, callback])`
+### `update (file)`
 Creates a copy of file and updates paths on its contents. returns the updated copy of file.
 
 returns `VFile`
@@ -55,10 +55,6 @@ returns `VFile`
 #### `file`
 `VFile`
 VFile to work on
-
-#### `callback?`
-`function`
-Optional callback will be called on each sub vfile.
 
 ### `update#undo (file)`
 Creates a copy of file and undoes update on sub vfile's history. 
