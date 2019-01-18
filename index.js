@@ -4,7 +4,7 @@ const visit = require('vfile-visit');
 
 const update = file => {
 	return visit(file, (current, index, parent) => {
-		if (current.path && parent.path) {
+		if (parent && parent.path && current.path) {
 			current.dirname = parent.path;
 		}
 	});
@@ -12,7 +12,7 @@ const update = file => {
 
 const undo = file => {
 	return visit(file, current => {
-		if (current.history.length > 1) {
+		if (current.history && current.history.length > 1) {
 			current.history.pop();
 		}
 	});
