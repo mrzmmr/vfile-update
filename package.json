@@ -4,7 +4,7 @@
 	"description": "Update paths in nested vfile contents.",
 	"main": "index.js",
 	"engines": {
-		"node": ">=6.0.0"
+		"node": ">=8"
 	},
 	"scripts": {
 		"xo": "xo --fix",
