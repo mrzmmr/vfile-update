@@ -22,10 +22,10 @@
 	"author": "Paul Zimmer",
 	"license": "MIT",
 	"devDependencies": {
-		"clone": "^2.1.1",
-		"coveralls": "^3.0.2",
-		"tap": "^12.1.1",
-		"vfile": "^2.3.0",
+		"clone": "^2.1.2",
+		"coveralls": "^3.0.5",
+		"tap": "^14.4.3",
+		"vfile": "^4.0.1",
 		"xo": "^0.24.0"
 	},
 	"dependencies": {
